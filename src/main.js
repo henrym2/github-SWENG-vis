@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import App from './App.vue'
 import Octokit from "@octokit/rest"
-require('dotenv').config()
+require("dotenv").config();
 
 const octokit = Octokit({
-  auth: process.env.GITHUB_TOKEN,
-  userAgent: 'SWENG github vis',
+  auth: `token ${process.env.VUE_APP_GITHUB_TOKEN}`,
+  userAgent: 'SWENG github vis'
 })
 
 // Object.definePrototype(Vue.prototype, '$octokit', { value: octokit });
