@@ -17,6 +17,7 @@
           <UserCard v-bind:userData="userData"></UserCard>
           <StarredRepos class="mt-1" v-bind:userName="userData.login"></StarredRepos>
         </div>
+        <PunchCard v-bind:currentUser="currentUser" class="d-flex"></PunchCard>
       </div>
   </div>
 </template>
@@ -24,13 +25,15 @@
 <script>
 import UserCard from "../src/components/UserCard"
 import StarredRepos from "../src/components/StarredRepos"
+import PunchCard from "../src/components/PunchCard"
 
 
 export default {
   name: 'app',
   components: {
     UserCard,
-    StarredRepos
+    StarredRepos,
+    PunchCard
   },
   data: function() {
     return {
@@ -40,7 +43,7 @@ export default {
               ],
       currentUser: "",
       userData: null,
-      loadingUser: false
+      loadingUser: false,
     }
   },
   methods:{
@@ -60,16 +63,13 @@ export default {
         }).then((res) => {
           this.loadingUser = false
           this.userData = res.data
-          // eslint-disable-next-line no-console
-          // console.log(res.data.starred_url)
-          
         }).catch(err => {
           // eslint-disable-next-line no-console
           console.log(err)
         })
       }
       this.loading = false
-    }
+    },
   }
 }
 </script>
