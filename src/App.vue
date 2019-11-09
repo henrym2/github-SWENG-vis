@@ -17,7 +17,7 @@
           <UserCard v-bind:userData="userData"></UserCard>
           <StarredRepos class="mt-1" v-bind:userName="userData.login"></StarredRepos>
         </div>
-        <PunchCard v-bind:currentUser="currentUser" class="d-flex"></PunchCard>
+        <PunchCard v-bind:currentUser="userData.login" class="d-flex"></PunchCard>
       </div>
   </div>
 </template>
