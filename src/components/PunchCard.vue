@@ -16,7 +16,7 @@ export default {
       punchCardData: null
     };
   },
-  mounted: function() {
+  created: function() {
     this.getPunchData();
   },
   props: {
@@ -29,8 +29,6 @@ export default {
   },
   methods: {
     buildGraph: function() {
-      // eslint-disable-next-line
-      // console.log("HI")
       let margin = { top: 10, right: 20, bottom: 30, left: 50 },
         width = 500 - margin.left - margin.right,
         height = 420 - margin.top - margin.bottom;
@@ -42,6 +40,34 @@ export default {
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    
+        let x = d3.scaleLinear()
+            .domain([0 ,7])
+            .range([0, width])
+        svg.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x))
+        
+        let y = d3.scaleLinear()
+            .domain([0,24])
+            .range([height, 0])
+        svg.append("g")
+            .call(d3.axisLeft(y));
+
+        let z = d3.scaleLinear()
+            .domain([0, 10000])
+            .range([0, 1000])
+        svg.append("g")
+           .selectAll("dot")
+           .data(this.punchCardData)
+           .enter()
+           .append("circle")
+                .attr("cx", function(d){ return x(d[0])})
+                .attr("cy", function(d){ return y(d[1])})
+                .attr("r", function(d){ return z(d[2])})
+                .style("fill", "#69b3a2")
+                .style("opacity", "0.7")
+                .attr("stroke", "black")
     },
     getPunchData: function() {
       this.$octokit.repos
@@ -61,6 +87,11 @@ export default {
           });
           Promise.all(promises).then(repoStats => {
             this.punchCardData = repoStats.map(e => e.data);
+            //TODO, SUM ALL DAYS, SUM ALL HOURS, SUM ALL REPOS
+            //eslint-disable-next-line
+            console.log(this.punchCardData)
+          }).then(() => {
+                this.buildGraph();
           });
           
         }).catch(err => {
