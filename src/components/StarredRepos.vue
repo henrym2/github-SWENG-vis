@@ -28,6 +28,11 @@ export default {
     props: {
         userName: null
     },
+    watch:{
+        userName:function(){
+            this.getstarred()
+        }
+    },
     methods: {
         getstarred: function() {
             this.$octokit.activity.listReposStarredByUser({
