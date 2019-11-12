@@ -60,7 +60,7 @@ export default {
             .attr("transform", "translate(0," + height + ")")
             .call(d3.axisBottom(x).tickValues([0,1,2,3,4,5,6,7])
             .tickFormat(function(d,i){return daysOfWeek[i]}))
-            
+
         let y = d3.scaleLinear()
             .domain([0,24])
             .range([height, 0])
@@ -100,23 +100,19 @@ export default {
             );
           });
           Promise.all(promises).then(repoStats => {
-            //TODO, SUM ALL DAYS, SUM ALL HOURS, SUM ALL REPOS
-            //eslint-disable-next-line
             this.punchCardData = collateStats(repoStats.map(e => e.data))
           }).then(() => {
                 this.buildGraph();
           });
           
         }).catch(err => {
-            //eslint-disable-next-line
-            console.log(err)
+          //eslint-disable-next-line
+          console.log(err)
         });
     }
   }
 };
 function collateStats(stats){
-  //eslint-disable-next-line
-  // console.log(stats)
   let arr = []
 
   let k = 0
@@ -136,7 +132,6 @@ function collateStats(stats){
       j++;
     })
   })
-  //eslint-disable-next-line
   return arr  
 }
 /*   0   1   2          0 1 2 
