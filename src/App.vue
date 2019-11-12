@@ -3,12 +3,12 @@
     <div class="navbar navbar-expand-lg navbar-light bg-light mb-2">
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
           <label class="btn btn-secondary" v-bind:class="{active: page.active}" v-for="page in pages" v-bind:key="page.id">
-              <input type="radio" name="options" id="option1" autocomplete="off" v-on:click="changePage(page)"> {{page.name}}
+              <input type="radio" name="options" v-bind:id="'nav-button-'+id" autocomplete="off" v-on:click="changePage(page)"> {{page.name}}
           </label>
         </div>
         <div class="form-inline ml-auto">
-            <input class="form-control mr-sm-2" type="search" placeholder="Username" v-model="currentUser">
-            <button class="btn my-2 my-sm-0" type="submit" v-on:click=";loadingUser = true;findUser()" :class="error ? 'btn-outline-danger' : 'btn-outline-primary'">
+            <input class="form-control mr-sm-2" type="search" placeholder="Username" v-model="currentUser" id="user_search">
+            <button class="btn my-2 my-sm-0" type="submit" id="search_button" v-on:click=";loadingUser = true;findUser()" :class="error ? 'btn-outline-danger' : 'btn-outline-primary'">
               <span v-if="loadingUser" class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Search</button>
         </div>
       </div>
