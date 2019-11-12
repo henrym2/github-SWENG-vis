@@ -9,7 +9,7 @@
 
 <script>
 const d3 = require("d3");
-
+const daysOfWeek = ["","Mon","Tue","Wed","Thur","Fri","Sat","Sun"]
 export default {
   data: function() {
     return {
@@ -55,10 +55,12 @@ export default {
         let x = d3.scaleLinear()
             .domain([0 ,7])
             .range([0, width])
+            
         svg.append("g")
             .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x))
-        
+            .call(d3.axisBottom(x).tickValues([0,1,2,3,4,5,6,7])
+            .tickFormat(function(d,i){return daysOfWeek[i]}))
+            
         let y = d3.scaleLinear()
             .domain([0,24])
             .range([height, 0])
@@ -135,9 +137,7 @@ function collateStats(stats){
     })
   })
   //eslint-disable-next-line
-  console.log(arr)
-  return arr
-  
+  return arr  
 }
 /*   0   1   2          0 1 2 
   0 [0] [2] [0]         1
