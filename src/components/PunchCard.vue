@@ -2,7 +2,7 @@
   <div class="card ml-1 shadow">
     <div class="card-body">
       <h5 class="card-title">Punch Card</h5>
-      <div id="punch_card"></div>
+      <div id="punch_card" class="mt-3 pt-3"></div>
     </div>
   </div>
 </template>
@@ -29,18 +29,29 @@ export default {
   },
   methods: {
     buildGraph: function() {
-      let margin = { top: 10, right: 20, bottom: 30, left: 50 },
+      let graph = d3.select("#punch-graph")
+      if(graph) {
+        graph.remove()
+      }
+      let margin = { top: 15, right: 20, bottom: 30, left: 50 },
         width = 500 - margin.left - margin.right,
         height = 420 - margin.top - margin.bottom;
       // eslint-disable-next-line
       let svg = d3
         .select("#punch_card")
-        .append("svg")
+        .insert("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
+        .attr("id", "punch-graph")
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-    
+        let punchCardData = this.punchCardData
+        let max = 0
+        punchCardData.forEach(stat => {
+          if(Math.max(...stat) > max){
+            max = Math.max(...stat)
+          }
+        })
         let x = d3.scaleLinear()
             .domain([0 ,7])
             .range([0, width])
@@ -55,15 +66,16 @@ export default {
             .call(d3.axisLeft(y));
 
         let z = d3.scaleLinear()
-            .domain([0, 10000])
-            .range([0, 1000])
+            .domain([0, max])
+            .range([0, 20])
+            
         svg.append("g")
            .selectAll("dot")
-           .data(this.punchCardData)
+           .data(punchCardData)
            .enter()
            .append("circle")
-                .attr("cx", function(d){ return x(d[0])})
-                .attr("cy", function(d){ return y(d[1])})
+                .attr("cx", function(d){ return x(d[0]+1)})
+                .attr("cy", function(d){ return y(d[1]+1)})
                 .attr("r", function(d){ return z(d[2])})
                 .style("fill", "#69b3a2")
                 .style("opacity", "0.7")
@@ -86,10 +98,9 @@ export default {
             );
           });
           Promise.all(promises).then(repoStats => {
-            this.punchCardData = repoStats.map(e => e.data);
             //TODO, SUM ALL DAYS, SUM ALL HOURS, SUM ALL REPOS
             //eslint-disable-next-line
-            console.log(this.punchCardData)
+            this.punchCardData = collateStats(repoStats.map(e => e.data))
           }).then(() => {
                 this.buildGraph();
           });
@@ -101,6 +112,40 @@ export default {
     }
   }
 };
+function collateStats(stats){
+  //eslint-disable-next-line
+  // console.log(stats)
+  let arr = []
+
+  let k = 0
+  for(let i = 0; i < 24*7; i++){
+    if(i % 24 == 0 && i != 0){
+      k++
+    } 
+    arr.push([(k),(i%24),0])
+  }
+
+  stats.forEach(repo => {
+    let j = 0;
+    repo.forEach(stat => {
+      if(arr[j][0] == stat[0] && arr[j][1] == stat[1]){
+        arr[j][2] += stat[2]
+      }
+      j++;
+    })
+  })
+  //eslint-disable-next-line
+  console.log(arr)
+  return arr
+  
+}
+/*   0   1   2          0 1 2 
+  0 [0] [2] [0]         1
+  1 [0] [5] [2]         2 
+  2 [0] [5] [5]         3 
+  3 [1] [2] [11]        .
+                     24*7   
+*/
 </script>
 
 <style>
