@@ -1,7 +1,7 @@
 <template>
   <div class="card ml-1 shadow">
-    <div class="card-body">
-      <h5 class="card-title">Punch Card</h5>
+    <div class="card-body d-flex flex-column">
+      <h5 class="card-title d-flex justify-content-center">Punch Card</h5>
       <div id="punch_card" class="mt-3 pt-3"></div>
     </div>
   </div>
@@ -103,6 +103,7 @@ export default {
             this.punchCardData = collateStats(repoStats.map(e => e.data))
           }).then(() => {
                 this.buildGraph();
+                this.loading = false;
           });
           
         }).catch(err => {
