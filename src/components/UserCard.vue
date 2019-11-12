@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex card shadow" style="width: 20rem;">
+  <div class="d-flex card shadow" style="width: 20rem;" id="user_card">
       <img v-bind:src="userData.avatar_url" alt="https://upload.wikimedia.org/wikipedia/commons/7/72/Default-welcomer.png" class="card-img-top img-fluid">
       <div class="card-body">
         <h5 class="card-title">{{userData.name}}</h5>
