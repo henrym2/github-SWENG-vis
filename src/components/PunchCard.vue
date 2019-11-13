@@ -1,8 +1,9 @@
 <template>
-  <div class="card ml-1 shadow" id="punch_card_outer">
+  <div class="card ml-1 shadow" id="punch_card_outer" style="width:560px;">
     <div class="card-body d-flex flex-column">
       <h5 class="card-title d-flex justify-content-center">Punch Card</h5>
-      <div id="punch_card" class="mt-3 pt-3"></div>
+      <span v-if="loading" class="spinner-border text-primary d-flex justify-self-center align-self-center m-auto" role="status" aria-hidden="true" style="width:5rem;height:5rem"></span>
+      <div id="punch_card" class="mt-3 pt-3" v-show="!loading"></div>
     </div>
   </div>
 </template>
@@ -13,7 +14,8 @@ const daysOfWeek = ["","Mon","Tue","Wed","Thur","Fri","Sat","Sun"]
 export default {
   data: function() {
     return {
-      punchCardData: null
+      punchCardData: null,
+      loading: false
     };
   },
   created: function() {
@@ -126,8 +128,10 @@ export default {
             .on("mouseover", showTooltip)
             .on("mousemove", moveTooltip)
             .on("mouseleave", hideTooltip)
+        this.loading = false
     },
     getPunchData: function() {
+      this.loading = true
       this.$octokit.repos
         .listForUser({
           username: this.currentUser
