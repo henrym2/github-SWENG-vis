@@ -1,5 +1,5 @@
 <template>
-  <div class="card ml-1 shadow">
+  <div class="card ml-1 shadow" id="punch_card_outer">
     <div class="card-body d-flex flex-column">
       <h5 class="card-title d-flex justify-content-center">Punch Card</h5>
       <div id="punch_card" class="mt-3 pt-3"></div>
@@ -60,17 +60,58 @@ export default {
             .attr("transform", "translate(0," + height + ")")
             .call(d3.axisBottom(x).tickValues([0,1,2,3,4,5,6,7])
             .tickFormat(function(d,i){return daysOfWeek[i]}))
+            .append("text")
 
         let y = d3.scaleLinear()
             .domain([0,24])
             .range([height, 0])
         svg.append("g")
-            .call(d3.axisLeft(y));
+            .call(d3.axisLeft(y).tickValues([...Array(25).keys()]));
 
         let z = d3.scaleLinear()
             .domain([0, max])
             .range([0, 20])
-            
+
+        let tooltip = d3.select("#punch_card_outer")
+            .append("div")
+              .style("opacity", 0)
+              .attr("class", "tooltip")
+              .style("background-color", "black")
+              .style("border-radius", "5px")
+              .style("padding", "10px")
+              .style("color", "white")
+              .style("float", "left")
+              .style("position", "absolute")
+              .style("z-index", "100")
+              .style("white-space", "nowrap")
+              .style("display", "block")
+              .style("width", "8rem")
+
+        let showTooltip = function(d) {
+          tooltip
+            .transition()
+            .duration(200)
+          tooltip
+            .style("opacity", 1)
+            .html("Commits: " + d[2])
+            .style("left", (d3.mouse(this)[0]+30)+"px")
+            .style("right", (d3.mouse(this)[1]+30)+"px")
+        }
+        //eslint-disable-next-line
+        let moveTooltip = function(d) {
+          tooltip
+            .style("left", (d3.mouse(this)[0]+30)+"px")
+            .style("top", (d3.mouse(this)[1]+30)+"px")
+        }
+
+        //eslint-disable-next-line
+        let hideTooltip = function(d) {
+          tooltip
+            .transition()
+            .duration(200)
+            .style("opacity", 0)
+        }
+
         svg.append("g")
            .selectAll("dot")
            .data(punchCardData)
@@ -82,6 +123,9 @@ export default {
                 .style("fill", "#69b3a2")
                 .style("opacity", "0.7")
                 .attr("stroke", "black")
+            .on("mouseover", showTooltip)
+            .on("mousemove", moveTooltip)
+            .on("mouseleave", hideTooltip)
     },
     getPunchData: function() {
       this.$octokit.repos
