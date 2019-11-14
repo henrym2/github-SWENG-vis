@@ -1,0 +1,10 @@
+{
+    "build": {
+        "env": {
+            "VUE_APP_GITHUB_TOKEN":"@githubtoken"
+        }
+    },
+    "github": {
+        "silent": true
+    }
+}
