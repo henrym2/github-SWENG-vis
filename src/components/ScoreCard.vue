@@ -1,11 +1,15 @@
 <template>
   <div id="ScoreCard" class="card d-flex shadow">
-      <div class="card-body">
+      <div class="card-body d-flex flex-column">
           <h5 class="card-title">Score Card</h5>
-          <p>Followers: {{currentUser.followers}}</p>
-          <p>Following: {{currentUser.following}}</p>
-          <p>Starred: {{starred}}</p>
-          <p>Projects: {{projects}}</p>
+          <div class="d-flex flex-row">
+            <p >Followers: {{currentUser.followers}}</p>
+            <p class="ml-2">Following: {{currentUser.following}}</p>
+            <p class="ml-2">Starred: {{starred}}</p>
+            <p class="ml-2">Projects: {{projects}}</p>
+            <p class="ml-2">Public-Repos: {{currentUser.public_repos}}</p>
+            <p class="ml-2">Public-Gists: {{currentUser.public_repos}}</p>
+          </div>
       </div>
   </div>
 </template>
