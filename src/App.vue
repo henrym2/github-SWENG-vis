@@ -20,6 +20,7 @@
         <PunchCard v-bind:currentUser="userData.login" class="d-flex fade-in-top"></PunchCard>
         <div class="d-flex flex-column pl-1">
           <ScoreCard v-bind:currentUser="userData" class="d-flex fade-in-top"></ScoreCard>
+          <LanguageCard v-bind:userName="userData.login" class="d-flex fade-in-bottom mt-1"></LanguageCard>
         </div>
       </div>
       <b-alert
@@ -39,6 +40,7 @@ import UserCard from "../src/components/UserCard"
 import StarredRepos from "../src/components/StarredRepos"
 import PunchCard from "../src/components/PunchCard"
 import ScoreCard from "../src/components/ScoreCard"
+import LanguageCard from "../src/components/LanguageCard"
 
 
 export default {
@@ -47,7 +49,8 @@ export default {
     UserCard,
     StarredRepos,
     PunchCard,
-    ScoreCard
+    ScoreCard,
+    LanguageCard
   },
   data: function() {
     return {
@@ -153,6 +156,36 @@ export default {
   0% {
     -webkit-transform: translateY(-50px);
             transform: translateY(-50px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.fade-in-bottom {
+	-webkit-animation: fade-in-bottom 0.7s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+	animation: fade-in-bottom 0.7s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+@-webkit-keyframes fade-in-bottom {
+  0% {
+    -webkit-transform: translateY(50px);
+            transform: translateY(50px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes fade-in-bottom {
+  0% {
+    -webkit-transform: translateY(50px);
+            transform: translateY(50px);
     opacity: 0;
   }
   100% {
