@@ -17,7 +17,7 @@
           <UserCard v-bind:userData="userData"></UserCard>
           <StarredRepos class="mt-1" v-bind:userName="userData.login"></StarredRepos>
         </div>
-        <PunchCard v-bind:currentUser="userData.login" class="d-flex fade-in-top"></PunchCard>
+        <PunchCard v-bind:currentUser="userData.login" class="d-flex fade-in-top" id="card_punch" ></PunchCard>
         <div class="d-flex flex-column pl-1">
           <ScoreCard v-bind:currentUser="userData" class="d-flex fade-in-top"></ScoreCard>
           <LanguageCard v-bind:userName="userData.login" class="d-flex fade-in-bottom mt-1"></LanguageCard>

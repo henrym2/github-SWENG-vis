@@ -36,8 +36,8 @@ export default {
         graph.remove()
       }
       let margin = { top: 15, right: 20, bottom: 30, left: 50 },
-        width = 500 - margin.left - margin.right,
-        height = 420 - margin.top - margin.bottom;
+        width = (window.innerWidth/3) - margin.left - margin.right,
+        height = (window.innerHeight/2) - margin.top - margin.bottom;
       // eslint-disable-next-line
       let svg = d3
         .select("#punch_card")
