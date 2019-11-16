@@ -5,7 +5,7 @@
           </h5>
       <div class="card-body m-auto">
           <span v-if="loading" class="spinner-border text-primary d-flex justify-self-center align-self-center m-auto" role="status" aria-hidden="true" style="width:5rem;height:5rem"></span>
-          <div id="language_stats_graph" class="m-auto" v-show="!loading"></div>
+          <div id="language_stats_graph" v-show="!loading"></div>
       </div>
   </div>
 </template>
@@ -74,7 +74,7 @@ export default {
             if(pieGraph){
                 pieGraph.remove()
             }
-            let width = 450
+            let width = 500
             let height = 450
             let margin = 65
 
@@ -102,9 +102,6 @@ export default {
                         .innerRadius(radius * 0.5)         // This is the size of the donut hole
                         .outerRadius(radius * 0.8)
             
-            let outerArc = d3.arc()
-                             .innerRadius(radius * 0.9)
-                             .outerRadius(radius * 0.9)
             svg
                 .selectAll('allSlices')
                 .data(data_ready)
@@ -115,43 +112,27 @@ export default {
                 .attr("stroke", "white")
                 .style("stroke-width", "2px")
                 .style("opacity", 0.7)
-
-            svg
-                .selectAll('allPolylines')
-                .data(data_ready)
+            //eslint-disable-next-line
+            console.log()
+            svg.selectAll("mydots")
+                .data(Object.keys(data))
                 .enter()
-                .append('polyline')
-                  .attr("stroke", "black")
-                  .style("fill", "none")
-                  .attr("stroke-width", 1)
-                  .attr('points', function(d) {
-                    var posA = arc.centroid(d) // line insertion in the slice
-                    var posB = outerArc.centroid(d) // line break: we use the other arc generator that has been built only for that
-                    var posC = outerArc.centroid(d); // Label position = almost the same as posB
-                    var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 // we need the angle to see if the X position will be at the extreme right or extreme left
-                    posC[0] = radius * 0.90 * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
-                    return [posA, posB, posC]
-                  })
-            
-            svg
-                .selectAll('allLabels')
-                .data(data_ready)
-                .enter()
-                .append('text')
-                  .text( function(d) { 
-                      //eslint-disable-next-line
-                      /*console.log(d.data.key)*/ ; return d.data.key } )
-                  .attr('transform', function(d) {
-                      var pos = outerArc.centroid(d);
-                      var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
-                      pos[0] = radius * 0.99 * (midangle < Math.PI ? 1 : -1);
-                      return 'translate(' + pos + ')';
-                  })
-                  .style('text-anchor', function(d) {
-                      var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
-                      return (midangle < Math.PI ? 'start' : 'end')
-                  })
+                .append("circle")
+                .attr("cx", function(d,i){return -200 + i*100})
+                .attr("cy", 175)
+                .attr("r", 7)
+                .style("fill", function(d){return color(d)})
 
+            svg.selectAll("mylabels")
+               .data(Object.keys(data))
+               .enter()
+               .append("text")
+               .attr("x", function(d,i){return -190 + i*100})
+               .attr("y", 175)
+               .style("fill", function(d){return color(d)})
+               .text(function(d){return d})
+               .attr("text-anchor", "left")
+               .style("alignment-baseline", "left")    
         }
     }
 }
