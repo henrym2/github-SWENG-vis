@@ -60,10 +60,8 @@ export default {
                             }
                         }
                     })
-                    
+                    delete this.languageStats.HTML
                     this.languageStats = sortObject(this.languageStats)
-                    //eslint-disable-next-line
-                    console.log(this.languageStats)
                     this.createGraph()
                     this.loading = false
                 })
