@@ -61,6 +61,7 @@ export default {
                         }
                     })
                     delete this.languageStats.HTML
+                    delete this.languageStats.CSS
                     this.languageStats = sortObject(this.languageStats)
                     this.createGraph()
                     this.loading = false
@@ -72,8 +73,8 @@ export default {
             if(pieGraph){
                 pieGraph.remove()
             }
-            let width = 500
-            let height = 450
+            let width = window.innerHeight/1.6
+            let height = window.innerHeight/1.7
             let margin = 65
 
             let radius = Math.min(width, height) / 2 - margin
