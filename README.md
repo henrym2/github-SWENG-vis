@@ -10,6 +10,8 @@ The project makes use of a number of technologies to visualize various statistic
 with the users 5 most recent starred repositories. It's easy to infer a users interests from their starred repositories. Clicking on the expand icon
 will display a list of all of a users starred repositories in a Modal. Any user can be searched against using the "search" field and their username//login name.
 
+The linked [commit](https://github.com/henrym2/github-SWENG-vis/commit/ac0586767b7970184d69594a2960b551d65c778a) shows the initial git API interrogation marked due for the 8th November 2019.
+
 ![Example 1](docs/Example3.gif)
 
 See further examples of pre-searched users in the [docs](docs/) folder. Further information associated with the Project itself, along with a publicly
