@@ -8,11 +8,11 @@
         </div>
         <div class="form-inline ml-auto">
             <input class="form-control mr-sm-2" type="search" placeholder="Username" v-model="currentUser" id="user_search">
-            <button class="btn my-2 my-sm-0" type="submit" id="search_button" v-on:click=";loadingUser = true;findUser()" :class="error ? 'btn-outline-danger' : 'btn-outline-primary'">
+            <button class="btn my-2 my-sm-0" type="submit" id="search_button" v-on:click=";loadingUser = true;findUser(); changePage(pages[0])" :class="error ? 'btn-outline-danger' : 'btn-outline-primary'">
               <span v-if="loadingUser" class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Search</button>
         </div>
       </div>
-      <div class="d-flex flex-row pl-2" v-if="userData">
+      <div class="d-flex flex-row pl-2" v-if="userData && pages[0].active">
         <div class="d-flex flex-column flex-wrap fade-in-left">
           <UserCard v-bind:userData="userData"></UserCard>
           <StarredRepos class="mt-1" v-bind:userName="userData.login"></StarredRepos>
@@ -21,6 +21,11 @@
         <div class="d-flex flex-column pl-1">
           <ScoreCard v-bind:currentUser="userData" class="d-flex fade-in-top"></ScoreCard>
           <LanguageCard v-bind:userName="userData.login" class="d-flex fade-in-bottom mt-1"></LanguageCard>
+        </div>
+      </div>
+      <div class="d-flex flex-row pl-2" v-if="pages[1].active">
+        <div class="d-flex flex-column flex-wrap fade-in-left">
+          <InfoCard></InfoCard>
         </div>
       </div>
       <b-alert
@@ -41,6 +46,7 @@ import StarredRepos from "../src/components/StarredRepos"
 import PunchCard from "../src/components/PunchCard"
 import ScoreCard from "../src/components/ScoreCard"
 import LanguageCard from "../src/components/LanguageCard"
+import InfoCard from "../src/components/InfoCard"
 
 
 export default {
@@ -50,13 +56,13 @@ export default {
     StarredRepos,
     PunchCard,
     ScoreCard,
-    LanguageCard
+    LanguageCard,
+    InfoCard
   },
   data: function() {
     return {
-      pages: [{name: "Home", id: 0, active: true},
-              {name: "Profile", id: 1, active: false},
-              {name: "Settings", id: 2, active: false}
+      pages: [{name: "Profiles", id: 0, active: true},
+              {name: "About", id: 1, active: false}
               ],
       currentUser: "",
       userData: null,
