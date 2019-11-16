@@ -8,7 +8,7 @@
             <p class="ml-2">Starred: {{starred}}</p>
             <p class="ml-2">Projects: {{projects}}</p>
             <p class="ml-2">Public-Repos: {{currentUser.public_repos}}</p>
-            <p class="ml-2">Public-Gists: {{currentUser.public_repos}}</p>
+            <p class="ml-2">Public-Gists: {{currentUser.public_gists}}</p>
           </div>
       </div>
   </div>
