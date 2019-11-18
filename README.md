@@ -18,7 +18,13 @@ See further examples of pre-searched users in the [docs](docs/) folder. Further 
 hosted version can be found at [https://github-sweng-vis-three-teal.now.sh/](https://github-sweng-vis-three-teal.now.sh/).
 The Info Tab on the project provides a detail description of the various metrics displayed and why they were used in the project as a whole. Some known issues exist with sizing of the graphs, as something to be aware of.
 
-Below you will find commands required to setup, build, develop and test the project. 
+## Technologies used
+
+- [Vue.js](https://vuejs.org/)
+- [@octokit/rest](https://www.npmjs.com/package/@octokit/rest)
+- [Bootstrap-vue](https://bootstrap-vue.js.org/)
+- [Zeit-now-deploy](https://zeit.co/)
+- [Jest](https://jestjs.io/)
 
 ## Project Setup
 
