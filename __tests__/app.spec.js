@@ -16,10 +16,7 @@ describe('App',() => {
     test("Is rendering", () => {
         const wrapper = shallowMount(App, {localVue})
         expect(wrapper.vm.currentUser).toBe("")
-        const navButton = wrapper.find('#nav-button-1')
-        navButton.exists()
-        const search = wrapper.find('#user_search')
-        search.exists()
-        search.setValue("henrym2")
+        const overlay = wrapper.find('#overlay')
+        overlay.exists()
     })
 })
