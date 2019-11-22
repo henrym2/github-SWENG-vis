@@ -1,6 +1,9 @@
 <template>
   <div id="app" class="pt-1">
-    <div class="navbar navbar-expand-lg navbar-light bg-light mb-2">
+    <transition name="leave" leave-active-class="slide-leave-active">
+      <LandingPage v-if="!landed" v-on:click.native="landed=true"></LandingPage>
+    </transition>
+    <div v-if="landed" class="navbar navbar-expand-lg navbar-light bg-light mb-2">
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
           <label class="btn btn-secondary" v-bind:class="{active: page.active}" v-for="page in pages" v-bind:key="page.id">
               <input type="radio" name="options" v-bind:id="'nav-button-'+page.id" autocomplete="off" v-on:click="changePage(page)"> {{page.name}}
@@ -47,6 +50,7 @@ import PunchCard from "../src/components/PunchCard"
 import ScoreCard from "../src/components/ScoreCard"
 import LanguageCard from "../src/components/LanguageCard"
 import InfoCard from "../src/components/InfoCard"
+import LandingPage from "../src/components/LandingPage"
 
 
 export default {
@@ -57,7 +61,8 @@ export default {
     PunchCard,
     ScoreCard,
     LanguageCard,
-    InfoCard
+    InfoCard,
+    LandingPage
   },
   data: function() {
     return {
@@ -67,7 +72,8 @@ export default {
       currentUser: "",
       userData: null,
       loadingUser: false,
-      error: false
+      error: false,
+      landed: false
     }
   },
   methods:{
@@ -200,5 +206,41 @@ export default {
     opacity: 1;
   }
 }
+
+.slide-leave-active {
+	-webkit-animation: slide-out-bottom 1s cubic-bezier(0.950, 0.050, 0.795, 0.035) both;
+	animation: slide-out-bottom 1s cubic-bezier(0.950, 0.050, 0.795, 0.035) both;
+}
+
+/**
+ * ----------------------------------------
+ * animation slide-out-bottom
+ * ----------------------------------------
+ */
+@-webkit-keyframes slide-out-bottom {
+  0% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translateY(1000px);
+            transform: translateY(1000px);
+    opacity: 0;
+  }
+}
+@keyframes slide-out-bottom {
+  0% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translateY(1000px);
+            transform: translateY(1000px);
+    opacity: 0;
+  }
+}
+
 
 </style>
