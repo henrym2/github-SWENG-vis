@@ -10,9 +10,11 @@
           </label>
         </div>
         <div class="form-inline ml-auto">
+          <form @submit.prevent>
             <input class="form-control mr-sm-2" type="search" placeholder="Username" v-model="currentUser" id="user_search">
             <button class="btn my-2 my-sm-0" type="submit" id="search_button" v-on:click=";loadingUser = true;findUser(); changePage(pages[0])" :class="error ? 'btn-outline-danger' : 'btn-outline-primary'">
               <span v-if="loadingUser" class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Search</button>
+              </form>
         </div>
       </div>
       <div class="d-flex flex-row pl-2" v-if="userData && pages[0].active">
@@ -104,6 +106,7 @@ export default {
     },
   }
 }
+
 </script>
 
 <style>
