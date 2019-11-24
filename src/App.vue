@@ -36,6 +36,7 @@
       <div class="d-flex flex-row pl-2" v-if="pages[1].active && userData != null">
         <div class="d-flex flex-column flex-wrap fade-in-left">
           <UserCard v-bind:userData="userData" v-bind:isOrg="true"></UserCard>
+          <OrgRepos class="mt-1" v-bind:orgName="userData.login"></OrgRepos>
         </div>
       </div>
       <b-alert
@@ -58,6 +59,7 @@ import ScoreCard from "../src/components/user/ScoreCard"
 import LanguageCard from "../src/components/user/LanguageCard"
 import InfoCard from "../src/components/InfoCard"
 import LandingPage from "../src/components/LandingPage"
+import OrgRepos from "../src/components/organisation/OrgRepos"
 
 
 export default {
@@ -69,7 +71,8 @@ export default {
     ScoreCard,
     LanguageCard,
     InfoCard,
-    LandingPage
+    LandingPage,
+    OrgRepos
   },
   data: function() {
     return {
