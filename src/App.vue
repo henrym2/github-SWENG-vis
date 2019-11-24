@@ -36,8 +36,9 @@
       <div class="d-flex flex-row pl-2" v-if="pages[1].active && userData != null">
         <div class="d-flex flex-column flex-wrap fade-in-left">
           <UserCard v-bind:userData="userData" v-bind:isOrg="true"></UserCard>
-          <OrgRepos class="mt-1" v-bind:orgName="userData.login"></OrgRepos>
+          <OrgRepos class="mt-1 pl-1" v-bind:orgName="userData.login"></OrgRepos>
         </div>
+          <OrgReposCommits v-bind:orgName="userData.login"></OrgReposCommits>
       </div>
       <b-alert
       v-model="error"
@@ -60,6 +61,7 @@ import LanguageCard from "../src/components/user/LanguageCard"
 import InfoCard from "../src/components/InfoCard"
 import LandingPage from "../src/components/LandingPage"
 import OrgRepos from "../src/components/organisation/OrgRepos"
+import OrgReposCommits from "../src/components/organisation/OrgReposCommits"
 
 
 export default {
@@ -72,7 +74,8 @@ export default {
     LanguageCard,
     InfoCard,
     LandingPage,
-    OrgRepos
+    OrgRepos,
+    OrgReposCommits
   },
   data: function() {
     return {

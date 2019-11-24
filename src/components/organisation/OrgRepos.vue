@@ -14,9 +14,9 @@
       </p>
 
       </div>
-    <!-- <b-tooltip v-for="star in bigStars" v-bind:key="star.id" v-bind:target="'star'+star.id" triggers="hover focus" delay="{ show: 100, hide: 500}">
-            {{star.name}}
-    </b-tooltip> -->
+    <b-tooltip v-for="repo in bigRepos" v-bind:key="repo.id" v-bind:target="'star'+repo.id" triggers="hover focus" delay="{ show: 100, hide: 500}">
+            {{repo.name}}
+    </b-tooltip>
     <b-modal id="all-repos" hide-footer scrollable hide-backdrop content-class="shadow-lg" cancel-disabled>
         <template v-slot:modal-title>
             Organisation Repos
@@ -44,8 +44,8 @@ export default {
     },
     computed: {
         bigRepos: function(){
-            if(this.starred != []){
-            return this.starred.filter(e => e.tooLong)
+            if(this.repos != []){
+            return this.repos.filter(e => e.tooLong)
             }
             return []
         }
