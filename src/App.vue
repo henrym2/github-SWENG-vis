@@ -12,7 +12,7 @@
         <div class="form-inline ml-auto">
           <form @submit.prevent>
             <input class="form-control mr-sm-2" type="search" placeholder="Username" v-model="currentUser" id="user_search">
-            <button class="btn my-2 my-sm-0" type="submit" id="search_button" v-on:click=";loadingUser = true;findUser(); changePage(pages[0])" :class="error ? 'btn-outline-danger' : 'btn-outline-primary'">
+            <button class="btn my-2 my-sm-0" type="submit" id="search_button" v-on:click=";loadingUser = true;findUser();" :class="error ? 'btn-outline-danger' : 'btn-outline-primary'">
               <span v-if="loadingUser" class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Search</button>
               </form>
         </div>
@@ -28,9 +28,14 @@
           <LanguageCard v-bind:userName="userData.login" class="d-flex fade-in-bottom mt-1"></LanguageCard>
         </div>
       </div>
-      <div class="d-flex flex-row pl-2" v-if="pages[1].active">
+      <div class="d-flex flex-row pl-2" v-if="pages[2].active">
         <div class="d-flex flex-column flex-wrap fade-in-left">
           <InfoCard></InfoCard>
+        </div>
+      </div>
+      <div class="d-flex flex-row pl-2" v-if="pages[1].active && userData != null">
+        <div class="d-flex flex-column flex-wrap fade-in-left">
+          <UserCard v-bind:userData="userData" v-bind:isOrg="true"></UserCard>
         </div>
       </div>
       <b-alert
@@ -46,11 +51,11 @@
 </template>
 
 <script>
-import UserCard from "../src/components/UserCard"
-import StarredRepos from "../src/components/StarredRepos"
-import PunchCard from "../src/components/PunchCard"
-import ScoreCard from "../src/components/ScoreCard"
-import LanguageCard from "../src/components/LanguageCard"
+import UserCard from "../src/components/shared/UserCard"
+import StarredRepos from "../src/components/user/StarredRepos"
+import PunchCard from "../src/components/user/PunchCard"
+import ScoreCard from "../src/components/user/ScoreCard"
+import LanguageCard from "../src/components/user/LanguageCard"
 import InfoCard from "../src/components/InfoCard"
 import LandingPage from "../src/components/LandingPage"
 
@@ -68,33 +73,61 @@ export default {
   },
   data: function() {
     return {
-      pages: [{name: "Profiles", id: 0, active: true},
-              {name: "About", id: 1, active: false}
+      pages: [
+              {name: "Profiles", id: 0, active: true},
+              {name: "Organisations", id: 1, active: false},
+              {name: "About", id: 2, active: false}
               ],
       currentUser: "",
       userData: null,
       loadingUser: false,
       error: false,
-      landed: false
+      landed: false,
+      isOrg: false
     }
-  },
+  },   
   methods:{
     changePage: function(page){
+      this.userData = null
+      this.currentUser = ""
       this.pages.forEach(p => {
         if(p.id == page.id){
+          if(p.id == 1){
+            this.isOrg = true
+          }else{
+            this.isOrg = false
+          }
           p.active = true
         }else{
           p.active = false
+        
         }
       })
     },
     findUser: function() {
-      if(this.currentUser != ""){
+      if(this.currentUser != "" && this.isOrg == false){
         this.$octokit.users.getByUsername({
           username: this.currentUser
         }).then((res) => {
           this.loadingUser = false
           this.error = false
+          this.userData = res.data
+          //eslint-disable-next-line
+          console.log(res.data, this.isOrg)
+        }).catch(err => {
+          //eslint-disable-next-line
+          console.log(err)
+          this.loadingUser = false
+          this.error = true
+        })
+      }else if(this.currentUser != ""){
+        this.$octokit.orgs.get({
+          org: this.currentUser
+        }).then((res) => {
+          this.loadingUser = false
+          this.error = false
+          //eslint-disable-next-line
+          console.log(res.data)
           this.userData = res.data
         }).catch(err => {
           //eslint-disable-next-line
