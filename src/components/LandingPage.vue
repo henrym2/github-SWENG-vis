@@ -39,7 +39,7 @@ export default {
 
 .gradientText{
   color: transparent;
-  transition-duration: 0.3s;
+  transition-duration: 0.7s;
   background: linear-gradient(to right, #13f3b9 0%, rgb(48, 88, 250) 50%, transparent 50%) 100% 0 / 200% 200% #474E51;
   background-clip: text;
   text-shadow: whitesmoke;

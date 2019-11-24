@@ -4,8 +4,10 @@
       <div class="card-body">
         <h5 class="card-title">{{userData.name}}</h5>
         <p class="card-text mb-0">Followers: {{userData.followers}}</p>
+        <p v-if="isOrg" class="card-text mb-0">Following: {{userData.following}}</p>
+        <p v-if="userData.collaborators">Collaborators: {{userData.collaborators}}</p>
         <p v-if="userData.company" class="card-text mb-0">Company: {{userData.company}}</p>
-        <p class="card-text mb-0">Bio: {{userData.bio}}</p>
+        <p class="card-text mb-0">Bio: {{userData.bio ? userData.bio : userData.blog}}</p>
       </div>
   </div>
 </template>
@@ -17,11 +19,13 @@ export default {
       }
   },
   props:{
-      userData: Object
+          userData: Object,
+          isOrg: Boolean
   },
   methods: {
   
-  }
+  },
+  
 }
 </script>
 

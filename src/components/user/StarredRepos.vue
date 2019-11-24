@@ -36,7 +36,7 @@
 export default {
     data: function() {
         return {
-            starred: null
+            starred: []
         }
     },
     created: function() {
@@ -44,7 +44,7 @@ export default {
     },
     computed: {
         bigStars: function(){
-            if(this.starred != null){
+            if(this.starred != []){
             return this.starred.filter(e => e.tooLong)
             }
             return []

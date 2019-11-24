@@ -136,10 +136,14 @@ export default {
     }
 }
 function sortObject(obj) {
-  return Object.keys(obj)
-    .sort().slice(0,5).reduce((a, v) => {
-    a[v] = obj[v];
-    return a; }, {});
+    if(obj != null){
+     return Object.keys(obj)
+        .sort().slice(0,5).reduce((a, v) => {
+            a[v] = obj[v];
+            return a; 
+        }, {});
+    }
+    return {}
 }
 </script>
 
